@@ -5,16 +5,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import CustomFormField from "../CustomFormField";
+import { Form } from "../ui/form";
+
+export enum FormFieldType {
+  INPUT = "input",
+  SELECT = "select",
+  TEXTAREA = "textarea",
+  CHECKBOX = "checkbox",
+  PHONE_NUMBER = "phoneNumber",
+  DATE_PICKER = "datePicker",
+  SKELETON = "skeleton",
+}
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -22,8 +24,7 @@ const formSchema = z.object({
   }),
 });
 
-export function PatientForm() {
-  // 1. Define your form.
+export default function PatientForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,32 +32,54 @@ export function PatientForm() {
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <div className="md:max-w-[496px]">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <section className="mb-12 space-y-4">
+            <h1 className="text-4xl font-bold">Hi there, ...</h1>
+            <p className="text-sm text-neutral-400">
+              Get Started with Appointments.
+            </p>
+          </section>
+
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="name"
+            label="Full Name"
+            placeholder="Anindo Ahmed"
+            iconSrc="/assets/icons/user.svg"
+            iconAlt="user"
+          />
+
+          <CustomFormField
+            fieldType={FormFieldType.INPUT}
+            control={form.control}
+            name="email"
+            label="Email"
+            placeholder="hello@gmail.com"
+            iconSrc="/assets/icons/email.svg"
+            iconAlt="email"
+          />
+
+          <CustomFormField
+            fieldType={FormFieldType.PHONE_NUMBER}
+            control={form.control}
+            name="phone_number"
+            label="Phone"
+            placeholder="+880 123 456 7890"
+          />
+
+          <Button type="submit" onClick={() => onSubmit}>
+            Submit
+          </Button>
+        </form>
+      </Form>
+    </div>
   );
 }
