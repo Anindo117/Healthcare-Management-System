@@ -4,9 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import CustomFormField from "../CustomFormField";
 import { Form } from "../ui/form";
+import SubmitButton from "../SubmitButton";
+import { useState } from "react";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -25,6 +26,7 @@ const formSchema = z.object({
 });
 
 export default function PatientForm() {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,9 +77,7 @@ export default function PatientForm() {
             placeholder="+880 123 456 7890"
           />
 
-          <Button type="submit" onClick={() => onSubmit}>
-            Submit
-          </Button>
+          <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
         </form>
       </Form>
     </div>

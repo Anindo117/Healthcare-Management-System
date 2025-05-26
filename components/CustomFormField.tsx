@@ -70,10 +70,12 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </FormControl>
         </div>
       );
+
     default:
       break;
   }
 };
+
 const CustomFormField = (props: CustomProps) => {
   const { control, fieldType, name, label } = props;
 
