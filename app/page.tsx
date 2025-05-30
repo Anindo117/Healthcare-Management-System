@@ -12,9 +12,9 @@ export default function Home() {
             height={1000}
             width={1000}
             alt="Logo"
-            className="h-8 w-fit"
+            className="h-7 w-fit"
           />
-          <h1 className="text-2xl fotn-bold">BodyCure</h1>
+          <h1 className="text-xl fotn-bold">BodyCure</h1>
         </div>
         <PatientForm />
         <div className="flex justify-between text-[#76828D] text-sm mt-20 max-w-[496px]">
