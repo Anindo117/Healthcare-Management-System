@@ -6,32 +6,33 @@ export default function SubmitButton({
   className,
   children,
 }: {
-  isLoading?: boolean;
+  isLoading: boolean;
   className?: string;
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }) {
   return (
-    <div>
-      <Button
-        type="submit"
-        disabled={isLoading}
-        className={className ?? "w-full bg-green-400 font-semibold"}
-      >
-        {isLoading ? (
-          <div>
-            <Image
-              src="/assets/icons/loader.svg"
-              alt="Loader"
-              width={20}
-              height={20}
-              className="animate-spin"
-            />{" "}
-            Loading ...
-          </div>
-        ) : (
-          children
-        )}
-      </Button>
-    </div>
+    <Button
+      type="submit"
+      disabled={isLoading}
+      className={
+        className ??
+        "w-full bg-green-400 hover:bg-green-500 font-semibold cursor-pointer"
+      }
+    >
+      {isLoading ? (
+        <div className="flex items-center gap-4">
+          <Image
+            src="/assets/icons/loader.svg"
+            alt="Loader"
+            width={24}
+            height={24}
+            className="animate-spin"
+          />{" "}
+          Loading ...
+        </div>
+      ) : (
+        children
+      )}
+    </Button>
   );
 }

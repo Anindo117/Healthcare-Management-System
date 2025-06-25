@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import {
@@ -8,6 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { E164Number } from "libphonenumber-js/core";
 import Image from "next/image";
 import { Control } from "react-hook-form";
 import PhoneInput from "react-phone-number-input";
@@ -15,7 +17,7 @@ import "react-phone-number-input/style.css";
 import { FormFieldType } from "./Forms/PatientForm";
 
 interface CustomProps {
-  control: Control;
+  control: Control<any>;
   fieldType: FormFieldType;
   name: string;
   label?: string;
@@ -24,8 +26,9 @@ interface CustomProps {
   iconAlt?: string;
   disabled?: boolean;
   dateFormat?: string;
-  showTimes?: boolean;
+  showTimesSelect?: boolean;
   children?: React.ReactNode;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   renderSkeletion?: (field: any) => React.ReactNode;
 }
 
@@ -35,7 +38,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
-        <div className="flex rounded-md border-b-1 border-neutral-600 pt-2">
+        <div className="flex rounded-md border-b-1 border-neutral-600 pt-2 ">
           {iconSrc && (
             <Image
               src={iconSrc}
@@ -66,6 +69,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               withCountryCallingCode
               value={field.value as E164Number | undefined}
               onChange={field.onChange}
+              className="border-none focus:ring-0 focus:border-none"
             />
           </FormControl>
         </div>
